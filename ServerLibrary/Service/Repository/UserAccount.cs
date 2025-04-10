@@ -17,7 +17,7 @@ namespace ServerLibrary.Service.Repository
 {
     public class UserAccount(IOptions<JwtSection> config, AppDBContext appDBContext) : IUserAccount
     {
-        public async Task<GeneralResponse> CreateAsync(Register user)
+        public async Task<GeneralResponse> CreateAsync(UserRegister user)
         {
             if (user == null) return new GeneralResponse(false, "Model is empty.");
 
@@ -54,7 +54,7 @@ namespace ServerLibrary.Service.Repository
             }
             return new GeneralResponse(true, "Account created");
         }
-        public async Task<LoginResponse> SignInAsync(Login user)
+        public async Task<LoginResponse> SignInAsync(UserLogin user)
         {
             if (user == null) return new LoginResponse(false, "Model is empty.");
             var applicationUser = await FindUserByEmail(user.Email);

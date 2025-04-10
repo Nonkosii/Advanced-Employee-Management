@@ -10,7 +10,7 @@ namespace ClientLibrary.ApiClient.Repository
     public class UserAccount(GetHttpClient getHttpClient) : IUserAccount
     {
         public const string AuthUrl = "api/authentication";
-        public async Task<GeneralResponse> CreateAsync(Register user)
+        public async Task<GeneralResponse> CreateAsync(UserRegister user)
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/register", user);
@@ -22,7 +22,7 @@ namespace ClientLibrary.ApiClient.Repository
             return response ?? new GeneralResponse(false, "Failed to parse register response from server");
         }
 
-        public async Task<LoginResponse> SignInAsync(Login user)
+        public async Task<LoginResponse> SignInAsync(UserLogin user)
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", user);

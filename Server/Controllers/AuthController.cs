@@ -10,7 +10,7 @@ namespace Server.Controllers
     public class AuthController(IUserAccount userAccount) : ControllerBase
     {
         [HttpPost("register")]
-        public async Task<IActionResult> CreateAsync(Register user)
+        public async Task<IActionResult> CreateAsync(UserRegister user)
         {
             if (user == null) return BadRequest("Model is empty");
             var result = await userAccount.CreateAsync(user);
@@ -18,7 +18,7 @@ namespace Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> SignInAsync(Login user)
+        public async Task<IActionResult> SignInAsync(UserLogin user)
         {
             if (user == null) return BadRequest("Model is empty");
             var result = await userAccount.SignInAsync(user);

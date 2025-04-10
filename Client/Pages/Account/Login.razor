@@ -26,18 +26,22 @@
         </div>
     </div>
 </div>
-@{
-    Login User = new();
+
+@code {
+    UserLogin User = new();
 
     async Task HandleLogin()
     {
         var result = await userAccount.SignInAsync(User);
 
-        if(result.Flag){
-            var customAuthStateProvider = (customAuthStateProvider)AuthStateProvider;
+        if (result.Flag)
+        {
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(
                 new UserSession() { Token = result.Token, RefreshToken = result.RefreshToken });
+
             NavManager.NavigateTo("/", forceLoad: true);
         }
     }
+
 }

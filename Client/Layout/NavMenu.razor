@@ -4,7 +4,7 @@
             Hi,
             <AuthorizeView>
                 <Authorized>@context.User.Identity!.Name</Authorized>
-                <Authorized>Guest</Authorized>
+                <NotAuthorized>Guest</NotAuthorized>
             </AuthorizeView>
         </a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
