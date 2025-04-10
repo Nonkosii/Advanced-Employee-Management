@@ -71,7 +71,7 @@ namespace ServerLibrary.Service.Repository
             var getRoleName = await FindRoleName(getUserRole.RoleId);
             if (getUserRole == null) return new LoginResponse(false, "User role name not found");
 
-            string jwtToken = GenerateToken(applicationUser, getRoleName.Name);
+            string jwtToken = GenerateToken(applicationUser, getRoleName!.Name);
             string refreshToken = GenerateRefreshToken();
 
             var findUser = await appDBContext.RefreshTokens.FirstOrDefaultAsync(_ => _.UserId == applicationUser.Id);
@@ -110,22 +110,23 @@ namespace ServerLibrary.Service.Repository
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private async Task<UserRole> FindUserRole(int userId) =>
+        private async Task<UserRole?> FindUserRole(int userId) =>
             await appDBContext.UserRoles.FirstOrDefaultAsync(_ => _.UserIdId == userId);
 
-        private async Task<SystemRole> FindRoleName(int roleId) =>
+        private async Task<SystemRole?> FindRoleName(int roleId) =>
             await appDBContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == roleId);
         private static string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-        private async Task<ApplicationUser> FindUserByEmail(string email) =>
+        private async Task<ApplicationUser?> FindUserByEmail(string email) =>
                 await appDBContext.ApplicationUsers
                 .FirstOrDefaultAsync(u => u.Email.ToLower().Equals(email.ToLower()));
 
-        private async Task<T> AddToDatabase<T>(T model)
+        private async Task<T> AddToDatabase<T>(T model) where T : notnull
         {
             var result = appDBContext.Add(model);
             await appDBContext.SaveChangesAsync();
             return (T)result.Entity;
         }
+
 
         public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenDto token)
         {
@@ -138,8 +139,8 @@ namespace ServerLibrary.Service.Repository
             if (user == null) return new LoginResponse(false, "Refresh token could not be generated because user is not found.");
 
             var userRole = await FindUserRole(user.Id);
-            var roleName = await FindRoleName(userRole.RoleId);
-            string jwtToken = GenerateToken(user, roleName.Name);
+            var roleName = await FindRoleName(userRole!.RoleId);
+            string jwtToken = GenerateToken(user, roleName!.Name);
             string refreshToken = GenerateRefreshToken();
 
             var updatedRefreshToken = await appDBContext.RefreshTokens.FirstOrDefaultAsync(_ => _.UserId == user.Id);

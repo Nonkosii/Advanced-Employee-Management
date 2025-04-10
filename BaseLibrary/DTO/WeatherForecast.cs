@@ -1,4 +1,4 @@
-namespace Server
+namespace BaseLibrary
 {
     public class WeatherForecast
     {

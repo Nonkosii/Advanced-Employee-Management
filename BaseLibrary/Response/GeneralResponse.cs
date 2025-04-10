@@ -2,5 +2,5 @@
 
 namespace BaseLibrary.Response
 {
-    public record GeneralResponse(bool Flag, string Message = null!);
+    public record GeneralResponse(bool Flag, string Message = "");
 }
