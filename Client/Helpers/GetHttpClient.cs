@@ -1,7 +1,7 @@
 ﻿using BaseLibrary.DTO;
 using System.Net.Http;
 
-namespace ClientLibrary.Helpers;
+namespace Client.Helpers;
 
 public class GetHttpClient(IHttpClientFactory httpClientFactory, LocalStorage localStorage)
 {

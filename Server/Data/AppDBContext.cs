@@ -1,7 +1,7 @@
 ﻿using BaseLibrary.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace ServerLibrary.Data
+namespace Server.Data
 {
     public class AppDBContext(DbContextOptions options) : DbContext(options)
     {

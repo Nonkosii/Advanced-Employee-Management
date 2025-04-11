@@ -1,15 +1,15 @@
 ﻿using BaseLibrary.DTO;
 using BaseLibrary.Response;
-using ClientLibrary.ApiClient.Interface;
-using ClientLibrary.Helpers;
+using Client.ApiClient.Interface;
+using Client.Helpers;
 using BaseLibrary;
 using System.Net.Http.Json;
 
-namespace ClientLibrary.ApiClient.Repository
+namespace Client.ApiClient.Repository
 {
     public class UserAccount(GetHttpClient getHttpClient) : IUserAccount
     {
-        public const string AuthUrl = "api/authentication";
+        public const string AuthUrl = "api/Auth";
         public async Task<GeneralResponse> CreateAsync(UserRegister user)
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
@@ -35,9 +35,16 @@ namespace ClientLibrary.ApiClient.Repository
 
         } 
 
-        public Task<LoginResponse> RefreshTokenAsync(RefreshTokenDto token)
+        public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenDto token)
         {
-            throw new NotImplementedException();
+            var httpClient = getHttpClient.GetPublicHttpClient();
+            var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/refresh-token", token);
+
+            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "Error Occured");
+
+            var response = await result.Content.ReadFromJsonAsync<LoginResponse>();
+
+            return response ?? new LoginResponse(false, "Failed to parse register response from server");
         }
 
         public async Task<WeatherForecast[]> GetWeatherForecasts()

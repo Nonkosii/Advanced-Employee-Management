@@ -2,7 +2,7 @@
 
 using Blazored.LocalStorage;
 
-namespace ClientLibrary.Helpers
+namespace Client.Helpers
 {
     public class LocalStorage(ILocalStorageService localStorage)
     {

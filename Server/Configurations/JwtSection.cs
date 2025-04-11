@@ -1,6 +1,6 @@
 ﻿
 
-namespace ServerLibrary.Configurations;
+namespace Server.Configurations;
 
 public class JwtSection
 {

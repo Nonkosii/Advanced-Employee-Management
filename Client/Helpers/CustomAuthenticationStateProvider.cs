@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace ClientLibrary.Helpers
+namespace Client.Helpers
 {
     public class CustomAuthenticationStateProvider(LocalStorage localStorage) : AuthenticationStateProvider
     {

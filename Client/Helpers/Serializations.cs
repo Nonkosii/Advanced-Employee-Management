@@ -1,7 +1,7 @@
 ﻿
 using System.Text.Json;
 
-namespace ClientLibrary.Helpers;
+namespace Client.Helpers;
 
 public class Serializations()
 {
