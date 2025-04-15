@@ -1,13 +1,23 @@
 ﻿@page "/identity/account/Register"
+@layout Authentication
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
             <EditForm Enhance Model="User" OnValidSubmit="HandleRegistration">
                 <DataAnnotationsValidator />
-                <ValidationSummary />
-                <div class="card">
-                    <div class="card-header">Register</div>
+                <div class="card bg-black d-flex justify-content-center" style="opacity:0.5; margin-top:50%; border-radius:10px; color:white;font-weight:bold">
+                    <div class="card-header text-center fs-5">Register</div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-center">
+                                <img style="border-radius: 20px" src="../images/background/logo.jpg" height="50" width="50" />
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="form-group">
                             <label class="form-label">Fullname</label>
@@ -29,9 +39,18 @@
                             <button class="btn btn-outline-primary float-end" type="submit">Register</button>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <span class="text-center">
+                            Have account already? |
+                            <a class="btn-link" href="identity/account/Login"> Sign In</a>
+                        </span>
+                        <ValidationSummary />
+                    </div>
                 </div>
             </EditForm>
+
         </div>
+        <div class="col-lg-4"></div>
     </div>
 </div>
 
