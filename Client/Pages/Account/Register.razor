@@ -2,6 +2,7 @@
 @layout Authentication
 
 @inject SfDialogService DialogService
+@inject NavigationManager NavManager
 
 <div class="container">
     <div class="row">
@@ -102,9 +103,17 @@
 
     private async Task CheckUserAuthentication()
     {
-        var user = (await AuthenticationState).User;
-        bool isUserAuthenticated = user.Identity!.IsAuthenticated;
-        if (isUserAuthenticated)
+        if (AuthenticationState == null)
+        {
+            return;
+        }
+
+        var authState = await AuthenticationState;
+        var user = authState.User;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
             NavManager.NavigateTo("/home/dashboard");
+        }
     }
 }

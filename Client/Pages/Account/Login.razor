@@ -2,11 +2,11 @@
 @layout Authentication
 
 @inject SfDialogService DialogService
+@inject NavigationManager NavManager
 
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
-
         </div>
         <div class="col-lg-4">
             <EditForm Enhance Model="User" OnValidSubmit="HandleLogin">
@@ -17,7 +17,7 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4"></div>
                             <div class="col-lg-4 col-md-4 col-sm-4 d-flex justify-content-center">
-                                <img style="border-radius: 20px" src="../images/background/logo.jpg" height="50" width="50"/>
+                                <img style="border-radius: 20px" src="../images/background/logo.jpg" height="50" width="50" />
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4"></div>
                         </div>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="form-group mt-3">
                             <label class="form-label">Password</label>
-                            <input type="password" @bind="User.Password" class="form-control"/>
+                            <input type="password" @bind="User.Password" class="form-control" />
                         </div>
                         <div class="form-group mt-3">
 
@@ -49,7 +49,7 @@
                             Don't have account? |
                             <a class="btn-link" href="identity/account/Register"> Sign Up</a>
                         </span>
-                        <ValidationSummary/>
+                        <ValidationSummary />
                     </div>
                 </div>
             </EditForm>
@@ -65,9 +65,12 @@
 
     UserLogin User = new();
 
-    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+    [CascadingParameter] public Task<AuthenticationState>? AuthenticationState { get; set; }
 
-    protected async override Task OnInitializedAsync() => await CheckUserAuthentication();
+    protected async override Task OnInitializedAsync()
+    {
+        await CheckUserAuthentication();
+    }
 
     async Task HandleLogin()
     {
@@ -97,9 +100,17 @@
 
     private async Task CheckUserAuthentication()
     {
-        var user = (await AuthenticationState).User;
-        bool isUserAuthenticated = user.Identity!.IsAuthenticated;
-        if (isUserAuthenticated)
+        if (AuthenticationState == null)
+        {
+            return;
+        }
+
+        var authState = await AuthenticationState;
+        var user = authState.User;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
             NavManager.NavigateTo("/home/dashboard");
+        }
     }
 }
