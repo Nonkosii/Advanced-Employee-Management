@@ -1,0 +1,40 @@
+﻿<SfDialog Width="250px" IsModal="true" ShowCloseIcon="true" @bind-Visible="IsVisible">
+    <DialogEvents OnOpen="OpenDialog"> </DialogEvents>
+    <DialogTemplates>
+        <Header>Add Department</Header>
+        <Content>
+            <EditForm Model="Department" Enhance>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <InputText @bind-Value="Department.Name" class="form-control"/>
+                    </div>
+                </div>
+            </EditForm>
+        </Content>
+    </DialogTemplates>
+
+    <DialogButtons>
+        <DialogButton Content="SAVE" Type="ButtonType.Submit" IsPrimary="true" OnClick="Save" />
+    </DialogButtons>
+</SfDialog>
+
+@code{
+    [Parameter] public GeneralDepartmentDTO Department { get; set; } = new();
+    private bool IsVisible { get; set; } = false;
+
+    public void OpenDialog()
+    {
+        IsVisible = true;
+        StateHasChanged();
+    }
+    async Task Save()
+    {
+        if (string.IsNullOrEmpty(Department.Name))
+        {
+            await JS.InvokeVoidAsync("console.log", "Save() called");
+            await dialogService.AlertAsync("Provide department name.", "Alert");
+            return;
+        }
+    }
+}

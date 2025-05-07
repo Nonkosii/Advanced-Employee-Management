@@ -1,9 +1,6 @@
 ﻿@page "/identity/account/Login"
 @layout Authentication
 
-@inject SfDialogService DialogService
-@inject NavigationManager NavManager
-
 <div class="container">
     <div class="row">
         <div class="col-lg-4">
@@ -95,7 +92,7 @@
         ShowLoadingButton = false;
     }
 
-    private async Task DisplayDialog(string content, string title) => await DialogService.AlertAsync(content, title);
+    private async Task DisplayDialog(string content, string title) => await dialogService.AlertAsync(content, title);
 
 
     private async Task CheckUserAuthentication()

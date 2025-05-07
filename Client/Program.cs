@@ -1,7 +1,9 @@
+using BaseLibrary.Model;
 using Blazored.LocalStorage;
 using Client;
 using Client.ApiClient.Interface;
 using Client.ApiClient.Repository;
+using Client.ApplicationState;
 using Client.Helpers;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -26,6 +28,8 @@ builder.Services.AddScoped<GetHttpClient>();
 builder.Services.AddScoped<LocalStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IUserAccount, UserAccount>();
+
+builder.Services.AddScoped<Department_>();
 
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddScoped<SfDialogService>();
